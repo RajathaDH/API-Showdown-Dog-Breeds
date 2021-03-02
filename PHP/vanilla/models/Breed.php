@@ -37,3 +37,26 @@
             $this->breedName = $breed['breed_name'];
             $this->info = $breed['info'];
         }
+
+        // add a new record
+        public function create() {
+            $query = 'INSERT INTO ' . $this->table . ' VALUES (:id, :breedName, :info)';
+
+            $stmt = $this->conn->prepare($query);
+
+            $this->id = htmlspecialchars(strip_tags($this->id));
+            $this->breedName = htmlspecialchars(strip_tags($this->breedName));
+            $this->info = htmlspecialchars(strip_tags($this->info));
+
+            $stmt->bindParam(':id', $this->id);
+            $stmt->bindParam(':breedName', $this->breedName);
+            $stmt->bindParam(':info', $this->info);
+
+            if ($stmt->execute()) {
+                return true;
+            }
+
+            printf("Error: %s.\n", $stmt->error);
+
+            return false;
+        }
