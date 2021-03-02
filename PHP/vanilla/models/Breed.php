@@ -60,3 +60,26 @@
 
             return false;
         }
+
+        // update an existing record
+        public function update() {
+            $query = 'UPDATE ' . $this->table . ' SET breed_name = :breed_name, info = :info WHERE id = :id';
+
+            $stmt = $this->conn->prepare($query);
+
+            $this->id = htmlspecialchars(strip_tags($this->id));
+            $this->breedName = htmlspecialchars(strip_tags($this->breedName));
+            $this->info = htmlspecialchars(strip_tags($this->info));
+
+            $stmt->bindParam(':id', $this->id);
+            $stmt->bindParam(':breed_name', $this->breedName);
+            $stmt->bindParam(':info', $this->info);
+
+            if ($stmt->execute()) {
+                return true;
+            }
+
+            printf("Error: %s.\n", $stmt->error);
+
+            return false;
+        }
