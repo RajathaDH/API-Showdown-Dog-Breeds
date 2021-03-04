@@ -34,7 +34,7 @@ async function createBreed(req, res) {
         const body = await getBodyData(req);
 
         const { breedName, info } = JSON.parse(body);
-        
+
         const breed = {
             breedName,
             info
@@ -49,10 +49,38 @@ async function createBreed(req, res) {
     }
 }
 
+async function updateBreed(req, res, id) {
+    try {
+        const existingBreed = await Breed.findById(id);
+
+        if (existingBreed) {
+            const body = await getBodyData(req);
+
+            const { breedName, info } = JSON.parse(body);
+
+            const breed = {
+                breedName: breedName || existingBreed.breedName,
+                info: info || existingBreed.info
+            };
+
+            const updatedBreed = await Breed.update(id, breed);
+
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            return res.end(JSON.stringify(updatedBreed));
+        } else {
+            res.writeHead(404, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'Breed not found' }));
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 module.exports = {
     getBreeds,
     getBreed,
-    createBreed
+    createBreed,
+    updateBreed
 }
 
 /*async function createBreed(req, res) {

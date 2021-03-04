@@ -29,8 +29,21 @@ function create(breed) {
     });
 }
 
+function update(id, breed) {
+    return new Promise((resolve, reject) => {
+        const index = breedsData.findIndex((b) => b.id == id);
+
+        breedsData[index] = { id, ...breed };
+
+        writeFile('../breedsdata.json', breedsData);
+
+        resolve(breedsData[index]);
+    });
+}
+
 module.exports = {
     findAll,
     findById,
-    create
+    create,
+    update
 }
