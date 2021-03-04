@@ -1,9 +1,14 @@
 const express = require('express');
 
+const Breed = require('../models/Breed');
+
 const router = express.Router();
 
-router.get('/', (req, res) => {
-    res.json({ message: 'Hello Breeds' });
+// get all breeds
+router.get('/', async (req, res) => {
+    const breeds = await Breed.findAll();
+
+    res.status(200).json(breeds);
 });
 
 module.exports = router;
