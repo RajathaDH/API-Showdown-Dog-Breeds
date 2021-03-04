@@ -2,6 +2,7 @@ const Breed = require('../models/Breed');
 
 const { getBodyData } = require('../utils');
 
+// get all breeds
 async function getBreeds(req, res) {
     try {
         const breeds = await Breed.findAll();
@@ -13,6 +14,7 @@ async function getBreeds(req, res) {
     }
 }
 
+// get a single breed by id
 async function getBreed(req, res, id) {
     try {
         const breed = await Breed.findById(id);
@@ -76,11 +78,29 @@ async function updateBreed(req, res, id) {
     }
 }
 
+async function deleteBreed(req, res, id) {
+    try {
+        const breed = await Breed.findById(id);
+
+        if (breed) {
+            await Breed.remove(id);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: `Breed ${id} has been removed` }));
+        } else {
+            res.writeHead(404, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ message: 'Breed not found' }));
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 module.exports = {
     getBreeds,
     getBreed,
     createBreed,
-    updateBreed
+    updateBreed,
+    deleteBreed
 }
 
 /*async function createBreed(req, res) {
