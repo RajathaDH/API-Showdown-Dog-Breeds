@@ -1,6 +1,6 @@
 const http = require('http');
 
-const { getBreeds, getBreed } = require('./controllers/breeds');
+const { getBreeds, getBreed, createBreed } = require('./controllers/breeds');
 
 const server = http.createServer((req, res) => {
     if (req.url == '/api/breeds' && req.method == 'GET') {
@@ -9,6 +9,8 @@ const server = http.createServer((req, res) => {
         const id = req.url.split('/')[3]; // /api/breeds/1 ['', 'api', 'breeds', '1']
 
         getBreed(req, res, id);
+    } else if (req.url == '/api/breeds' && req.method == 'POST') {
+        createBreed(req, res);
     } else {
         res.writeHead(404, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ message: 'Route not found' }));
