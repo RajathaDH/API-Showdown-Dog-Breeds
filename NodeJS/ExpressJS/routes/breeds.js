@@ -24,4 +24,18 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+// add a breed
+router.post('/', async (req, res) => {
+    const { breedName, info } = req.body;
+
+    const breed = {
+        breedName,
+        info
+    };
+
+    const newBreed = await Breed.create(breed);
+
+    res.status(201).json(newBreed);
+});
+
 module.exports = router;
