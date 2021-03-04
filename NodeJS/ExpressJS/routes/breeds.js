@@ -38,4 +38,26 @@ router.post('/', async (req, res) => {
     res.status(201).json(newBreed);
 });
 
+// update an existing breed
+router.put('/:id', async (req, res) => {
+    const id = req.params.id;
+    
+    const existingBreed = await Breed.findById(id);
+
+    if (existingBreed) {
+        const { breedName, info } = req.body;
+
+        const breed = {
+            breedName: breedName || existingBreed.breedName,
+            info: info || existingBreed.info
+        };
+
+        const updatedBreed = await Breed.update(id, breed);
+
+        res.status(200).json(updatedBreed);
+    } else {
+        res.status(404).json({ message: `Breed with id ${id} not found.` });
+    }
+});
+
 module.exports = router;
