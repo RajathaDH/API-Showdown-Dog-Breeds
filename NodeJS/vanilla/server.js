@@ -1,11 +1,10 @@
 const http = require('http');
 
-const breeds = require('../breeds.json');
+const { getBreeds } = require('./controllers/breeds');
 
 const server = http.createServer((req, res) => {
     if (req.url == '/api/breeds' && req.method == 'GET') {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(breeds));
+        getBreeds(req, res);
     } else {
         res.writeHead(404, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ message: 'Not found' }));
