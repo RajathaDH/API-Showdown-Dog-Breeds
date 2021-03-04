@@ -6,6 +6,15 @@ function findAll() {
     });
 }
 
+function findById(id) {
+    return new Promise((resolve, reject) => {
+        const breed = breedsData.find((b) => b.id == id);
+
+        resolve(breed);
+    });
+}
+
 module.exports = {
-    findAll
+    findAll,
+    findById
 }

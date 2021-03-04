@@ -1,13 +1,17 @@
 const http = require('http');
 
-const { getBreeds } = require('./controllers/breeds');
+const { getBreeds, getBreed } = require('./controllers/breeds');
 
 const server = http.createServer((req, res) => {
     if (req.url == '/api/breeds' && req.method == 'GET') {
         getBreeds(req, res);
+    } else if (req.url.match(/\/api\/breeds\/([0-9]+)/) && req.method == 'GET') {
+        const id = req.url.split('/')[3]; // /api/breeds/1 ['', 'api', 'breeds', '1']
+
+        getBreed(req, res, id);
     } else {
         res.writeHead(404, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'Not found' }));
+        res.end(JSON.stringify({ message: 'Route not found' }));
     }
 });
 
