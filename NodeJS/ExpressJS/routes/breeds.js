@@ -60,4 +60,19 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+// remove a breed
+router.delete('/:id', async (req, res) => {
+    const id = req.params.id;
+    
+    const breed = await Breed.findById(id);
+
+    if (breed) {
+        await Breed.remove(id);
+
+        res.status(200).json({ message: `Breed ${id} has been removed.`});
+    } else {
+        res.status(404).json({ message: `Breed with id ${id} not found.` });
+    }
+});
+
 module.exports = router;
