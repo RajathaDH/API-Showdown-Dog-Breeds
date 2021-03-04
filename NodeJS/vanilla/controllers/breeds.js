@@ -1,5 +1,7 @@
 const Breed = require('../models/Breed');
 
+const { getBodyData } = require('../utils');
+
 async function getBreeds(req, res) {
     try {
         const breeds = await Breed.findAll();
@@ -29,6 +31,32 @@ async function getBreed(req, res, id) {
 
 async function createBreed(req, res) {
     try {
+        const body = await getBodyData(req);
+
+        const { breedName, info } = JSON.parse(body);
+        
+        const breed = {
+            breedName,
+            info
+        };
+
+        const newBreed = await Breed.create(breed);
+
+        res.writeHead(201, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify(newBreed));
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+module.exports = {
+    getBreeds,
+    getBreed,
+    createBreed
+}
+
+/*async function createBreed(req, res) {
+    try {
         let body = '';
 
         req.on('data', chunk => {
@@ -51,10 +79,4 @@ async function createBreed(req, res) {
     } catch (err) {
         console.log(err);
     }
-}
-
-module.exports = {
-    getBreeds,
-    getBreed,
-    createBreed
-}
+}*/
