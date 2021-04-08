@@ -2,7 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\Breed;
+//use App\Models\Breed;
+use App\Http\Controllers\BreedController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,13 +20,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/breeds', function(){
+/*Route::get('/breeds', function(){
     return Breed::all();
-});
+});*/
 
-Route::post('/breeds', function(){
+/*Route::post('/breeds', function(){
     return Breed::create([
         'breed_name' => 'Breed 1',
         'info' => 'Info 1'
     ]);
-});
+});*/
+
+Route::get('/breeds', [BreedController::class, 'index']);
+
+Route::post('/breeds', [BreedController::class, 'store']);
