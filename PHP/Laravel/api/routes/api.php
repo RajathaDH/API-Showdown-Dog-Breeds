@@ -31,6 +31,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     ]);
 });*/
 
-Route::get('/breeds', [BreedController::class, 'index']);
+//Route::get('/breeds', [BreedController::class, 'index']);
 
-Route::post('/breeds', [BreedController::class, 'store']);
+//Route::post('/breeds', [BreedController::class, 'store']);
+
+// send all requests to breeds to breeds controller
+Route::resource('breeds', BreedController::class);

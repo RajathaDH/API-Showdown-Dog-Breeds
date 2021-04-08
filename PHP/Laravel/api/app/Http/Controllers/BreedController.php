@@ -40,7 +40,7 @@ class BreedController extends Controller
      */
     public function show($id)
     {
-        //
+        return Breed::find($id);
     }
 
     /**
