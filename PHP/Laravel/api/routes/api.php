@@ -37,3 +37,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 // send all requests to breeds to breeds controller
 Route::resource('breeds', BreedController::class);
+
+Route::get('/breeds/search/{breedName}', [BreedController::class, 'search']);

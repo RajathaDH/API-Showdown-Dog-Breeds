@@ -69,4 +69,19 @@ class BreedController extends Controller
     {
         return Breed::destroy($id);
     }
+
+    // search route
+    /**
+     * Search for a breed
+     *
+     * @param  str  $breedName
+     * @return \Illuminate\Http\Response
+     */
+    public function search($breedName)
+    {
+        // match exact
+        //return Breed::where('breed_name', $breedName)->get();
+
+        return Breed::where('breed_name', 'like', '%'.$breedName.'%')->get();
+    }
 }
