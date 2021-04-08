@@ -52,7 +52,11 @@ class BreedController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $breed = Breed::find($id);
+
+        $breed->update($request->all());
+
+        return $breed;
     }
 
     /**
