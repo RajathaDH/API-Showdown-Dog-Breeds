@@ -102,29 +102,3 @@ module.exports = {
     updateBreed,
     deleteBreed
 }
-
-/*async function createBreed(req, res) {
-    try {
-        let body = '';
-
-        req.on('data', chunk => {
-            body += chunk;
-        });
-
-        req.on('end', async () => {
-            const { breedName, info } = JSON.parse(body);
-
-            const breed = {
-                breedName,
-                info
-            };
-            
-            const newBreed = await Breed.create(breed);
-
-            res.writeHead(201, { 'Content-Type': 'application/json' });
-            return res.end(JSON.stringify(newBreed));
-        });
-    } catch (err) {
-        console.log(err);
-    }
-}*/
